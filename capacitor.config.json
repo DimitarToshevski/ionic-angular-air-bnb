@@ -1,0 +1,6 @@
+{
+  "appId": "com.airbnb.ionicangular",
+  "appName": "ionic-angular-air-bnb",
+  "bundledWebRuntime": false,
+  "webDir": "www"
+}
