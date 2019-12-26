@@ -6,6 +6,7 @@ import { Plugins, Capacitor } from '@capacitor/core';
 import { Subscription } from 'rxjs';
 
 import { AuthService } from './auth/auth.service';
+import { TrackingService } from './shared/tracking.service';
 
 @Component({
   selector: 'app-root',
@@ -16,32 +17,34 @@ export class AppComponent implements OnInit, OnDestroy {
   private previousAuthState = false;
 
   constructor(
-    private platform: Platform,
-    private authService: AuthService,
-    private router: Router
+    private _platform: Platform,
+    private _authService: AuthService,
+    private _router: Router,
+    private _ga: TrackingService
   ) {
     this.initializeApp();
   }
 
   initializeApp() {
-    this.platform.ready().then(() => {
+    this._platform.ready().then(() => {
       if (Capacitor.isPluginAvailable('SplashScreen')) {
         Plugins.SplashScreen.hide();
       }
     });
+    this._ga.initializeAnalytics();
   }
 
   ngOnInit() {
-    this.authSub = this.authService.userIsAuthenticated.subscribe(isAuth => {
+    this.authSub = this._authService.userIsAuthenticated.subscribe(isAuth => {
       if (!isAuth && this.previousAuthState !== isAuth) {
-        this.router.navigateByUrl('/auth');
+        this._router.navigateByUrl('/auth');
       }
       this.previousAuthState = isAuth;
     });
   }
 
   onLogout() {
-    this.authService.logout();
+    this._authService.logout();
   }
 
   ngOnDestroy() {

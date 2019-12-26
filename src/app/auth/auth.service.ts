@@ -101,9 +101,7 @@ export class AuthService implements OnDestroy {
   signup(email: string, password: string) {
     return this.http
       .post<AuthResponseData>(
-        `https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=${
-          environment.firebaseAPIKey
-        }`,
+        `https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=${environment.firebaseConfig.apiKey}`,
         { email: email, password: password, returnSecureToken: true }
       )
       .pipe(tap(this.setUserData.bind(this)));
@@ -112,9 +110,7 @@ export class AuthService implements OnDestroy {
   login(email: string, password: string) {
     return this.http
       .post<AuthResponseData>(
-        `https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=${
-          environment.firebaseAPIKey
-        }`,
+        `https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=${environment.firebaseConfig.apiKey}`,
         { email: email, password: password, returnSecureToken: true }
       )
       .pipe(tap(this.setUserData.bind(this)));

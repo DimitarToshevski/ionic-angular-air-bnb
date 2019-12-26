@@ -5,6 +5,7 @@ import { LoadingController, AlertController } from '@ionic/angular';
 import { Observable } from 'rxjs';
 
 import { AuthService, AuthResponseData } from './auth.service';
+import { TrackingService } from '../shared/tracking.service';
 
 @Component({
   selector: 'app-auth',
@@ -20,7 +21,8 @@ export class AuthPage implements OnInit {
     private router: Router,
     private loadingCtrl: LoadingController,
     private alertCtrl: AlertController,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private _ga: TrackingService
   ) {}
 
   ngOnInit() {}
@@ -42,7 +44,10 @@ export class AuthPage implements OnInit {
         }
         authObs.subscribe(
           resData => {
-            // console.log(resData);
+            this._ga.logEvent('user_logged_in', {
+              id: resData.localId,
+              email: resData.email
+            });
             this.isLoading = false;
             loadingEl.dismiss();
             this.router.navigateByUrl('/places/tabs/discover');

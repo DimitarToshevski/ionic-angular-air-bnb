@@ -5,7 +5,12 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-  <form #f="ngForm" (ngSubmit)="onSubmit(f)">
+  <form #f="ngForm" novalidate (ngSubmit)="onSubmit(f)">
+    <ion-input
+      type="password"
+      style="display:none"
+      name="fakeInput"
+    ></ion-input>
     <ion-grid>
       <ion-row>
         <ion-col size-lg="3" offset-lg="4.5" size-sm="6" offset-sm="3">
@@ -19,6 +24,7 @@
                 required
                 email
                 #emailCtrl="ngModel"
+                [autofocus]="true"
               ></ion-input>
             </ion-item>
             <ion-item
@@ -38,6 +44,7 @@
                 required
                 minlength="6"
                 #passwordCtrl="ngModel"
+                autocomplete="new-password"
               ></ion-input>
             </ion-item>
             <ion-item

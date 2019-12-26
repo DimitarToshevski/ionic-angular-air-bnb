@@ -147,6 +147,7 @@ export class PlaceDetailPage implements OnInit, OnDestroy {
                   data.endDate
                 )
                 .subscribe(() => {
+                  this.router.navigateByUrl('/bookings');
                   loadingEl.dismiss();
                 });
             });
