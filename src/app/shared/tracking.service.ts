@@ -17,7 +17,8 @@ export class TrackingService {
     this.analytics.logEvent(eventName, {
       ...eventParams,
       timeline:
-        new Date().toLocaleDateString() + ' ' + new Date().toLocaleTimeString()
+        new Date().toLocaleDateString() + ' ' + new Date().toLocaleTimeString(),
+      host: location.host
     });
   }
 }
